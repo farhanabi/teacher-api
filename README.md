@@ -196,3 +196,19 @@ Then run the compiled code:
 ```bash
 pnpm start
 ```
+
+## Testing with Postman
+
+A Postman collection is included in the `postman` directory, which contains requests for all API endpoints. To use it:
+
+1. Import the collection into Postman
+2. Set the `baseUrl` variable to your API URL (defaults to `http://localhost:3000`)
+3. Run the requests to test the API
+
+The collection includes the following requests:
+- Health Check
+- Register Students
+- Get Common Students (Single Teacher)
+- Get Common Students (Multiple Teachers)
+- Suspend Student
+- Retrieve Notification Recipients (With and Without Mentions)
