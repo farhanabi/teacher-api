@@ -52,3 +52,67 @@ export const registerStudentsToTeacher = async (teacherEmail: string, studentEma
     }
   }
 };
+
+export const getCommonStudents = async (teacherEmails: string[]) => {
+  const teacherIds = await Promise.all(
+    teacherEmails.map(async (email) => {
+      const teacher = await db.select().from(teachers).where(eq(teachers.email, email)).limit(1);
+      if (teacher.length === 0) {
+        throw new Error(`Teacher ${email} not found`);
+      }
+      return teacher[0]!.id;
+    })
+  );
+
+  if (teacherIds.length === 1) {
+    const registeredStudents = await db
+      .select({
+        email: students.email,
+      })
+      .from(students)
+      .innerJoin(
+        registrations,
+        eq(students.id, registrations.studentId)
+      )
+      .where(eq(registrations.teacherId, teacherIds[0]!));
+    
+    return registeredStudents.map(s => s.email);
+  }
+
+  const commonStudentEmails = await db.transaction(async (tx) => {
+    const firstTeacherStudentIds = await tx
+      .select({ studentId: registrations.studentId })
+      .from(registrations)
+      .where(eq(registrations.teacherId, teacherIds[0]!));
+    
+    let filteredStudentIds = firstTeacherStudentIds.map(s => s.studentId);
+    
+    for (let i = 1; i < teacherIds.length; i++) {
+      const teacherId = teacherIds[i]!;
+      
+      const registeredToTeacher = await tx
+        .select({ studentId: registrations.studentId })
+        .from(registrations)
+        .where(eq(registrations.teacherId, teacherId));
+      
+      const registeredIds = new Set(registeredToTeacher.map(r => r.studentId));
+      
+      filteredStudentIds = filteredStudentIds.filter(id => registeredIds.has(id));
+    }
+    
+    const commonStudents = await Promise.all(
+      filteredStudentIds.map(async (id) => {
+        const student = await tx
+          .select({ email: students.email })
+          .from(students)
+          .where(eq(students.id, id));
+        
+        return student[0]!.email;
+      })
+    );
+    
+    return commonStudents;
+  });
+  
+  return commonStudentEmails;
+};
