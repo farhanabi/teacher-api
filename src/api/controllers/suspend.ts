@@ -1,14 +1,18 @@
 import { NextFunction, Request, Response } from 'express';
+import { suspendSchema } from '../validations/suspend';
+import { suspendStudent } from '../../services/student';
 
 export const suspend = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // TODO: Implement the logic to suspend a student
-    res.status(501).json({ message: 'Not implemented yet' });
+    const { student } = suspendSchema.parse(req.body);
+    
+    await suspendStudent(student);
+    
+    res.status(204).send();
   } catch (error) {
     if (error instanceof Error) {
       res.status(400).json({ message: error.message });
-    } else {
-      res.status(500).json({ message: 'An unexpected error occurred' });
     }
+    res.status(500).json({ message: 'An unexpected error occurred' });
   }
 };
