@@ -1,221 +1,183 @@
 {
-  "info": {
-    "_postman_id": "a4f5e6f7-b8c9-d0e1-f2g3-h4i5j6k7l8m9",
-    "name": "Teacher API",
-    "description": "A set of API endpoints for teachers to perform administrative functions for their classes.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Health Check",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/health",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "health"
-          ]
-        },
-        "description": "Check if the API is up and running."
-      },
-      "response": []
-    },
-    {
-      "name": "Register Students",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"teacher\": \"teacherken@gmail.com\",\n  \"students\": [\n    \"studentjon@gmail.com\",\n    \"studenthon@gmail.com\"\n  ]\n}"
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/register",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "register"
-          ]
-        },
-        "description": "Register one or more students to a specified teacher."
-      },
-      "response": []
-    },
-    {
-      "name": "Get Common Students (Single Teacher)",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/api/commonstudents?teacher=teacherken@gmail.com",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "commonstudents"
-          ],
-          "query": [
-            {
-              "key": "teacher",
-              "value": "teacherken@gmail.com"
-            }
-          ]
-        },
-        "description": "Retrieve a list of students registered to a specific teacher."
-      },
-      "response": []
-    },
-    {
-      "name": "Get Common Students (Multiple Teachers)",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "{{baseUrl}}/api/commonstudents?teacher=teacherken@gmail.com&teacher=teacherjoe@gmail.com",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "commonstudents"
-          ],
-          "query": [
-            {
-              "key": "teacher",
-              "value": "teacherken@gmail.com"
-            },
-            {
-              "key": "teacher",
-              "value": "teacherjoe@gmail.com"
-            }
-          ]
-        },
-        "description": "Retrieve a list of students common to multiple teachers."
-      },
-      "response": []
-    },
-    {
-      "name": "Suspend Student",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"student\": \"studentmary@gmail.com\"\n}"
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/suspend",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "suspend"
-          ]
-        },
-        "description": "Suspend a specified student."
-      },
-      "response": []
-    },
-    {
-      "name": "Retrieve Notification Recipients (Without Mentions)",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"teacher\": \"teacherken@gmail.com\",\n  \"notification\": \"Hey everybody\"\n}"
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/retrievefornotifications",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "retrievefornotifications"
-          ]
-        },
-        "description": "Retrieve a list of students who can receive a notification (only registered students)."
-      },
-      "response": []
-    },
-    {
-      "name": "Retrieve Notification Recipients (With Mentions)",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"teacher\": \"teacherken@gmail.com\",\n  \"notification\": \"Hello students! @studentagnes@gmail.com @studentmiche@gmail.com\"\n}"
-        },
-        "url": {
-          "raw": "{{baseUrl}}/api/retrievefornotifications",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "retrievefornotifications"
-          ]
-        },
-        "description": "Retrieve a list of students who can receive a notification (includes @mentioned students)."
-      },
-      "response": []
-    }
-  ],
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "type": "text/javascript",
-        "exec": [
-          ""
-        ]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "exec": [
-          ""
-        ]
-      }
-    }
-  ],
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "http://localhost:3000",
-      "type": "string"
-    }
-  ]
+	"info": {
+		"_postman_id": "a4f5e6f7-b8c9-d0e1-f2g3-h4i5j6k7l8m9",
+		"name": "Teacher API",
+		"description": "A set of API endpoints for teachers to perform administrative functions for their classes.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/health",
+					"host": ["{{baseUrl}}"],
+					"path": ["health"]
+				},
+				"description": "Check if the API is up and running."
+			},
+			"response": []
+		},
+		{
+			"name": "Register Students",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"teacher\": \"teacherken@gmail.com\",\n  \"students\": [\n    \"studentjon@gmail.com\",\n    \"studenthon@gmail.com\"\n  ]\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/register",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "register"]
+				},
+				"description": "Register one or more students to a specified teacher."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Common Students (Single Teacher)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/commonstudents?teacher=teacherken@gmail.com",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "commonstudents"],
+					"query": [
+						{
+							"key": "teacher",
+							"value": "teacherken@gmail.com"
+						}
+					]
+				},
+				"description": "Retrieve a list of students registered to a specific teacher."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Common Students (Multiple Teachers)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/commonstudents?teacher=teacherken@gmail.com&teacher=teacherjoe@gmail.com",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "commonstudents"],
+					"query": [
+						{
+							"key": "teacher",
+							"value": "teacherken@gmail.com"
+						},
+						{
+							"key": "teacher",
+							"value": "teacherjoe@gmail.com"
+						}
+					]
+				},
+				"description": "Retrieve a list of students common to multiple teachers."
+			},
+			"response": []
+		},
+		{
+			"name": "Suspend Student",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"student\": \"studentmary@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/suspend",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "suspend"]
+				},
+				"description": "Suspend a specified student."
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve Notification Recipients (Without Mentions)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"teacher\": \"teacherken@gmail.com\",\n  \"notification\": \"Hey everybody\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/retrievefornotifications",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "retrievefornotifications"]
+				},
+				"description": "Retrieve a list of students who can receive a notification (only registered students)."
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve Notification Recipients (With Mentions)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"teacher\": \"teacherken@gmail.com\",\n  \"notification\": \"Hello students! @studentagnes@gmail.com @studentmiche@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/retrievefornotifications",
+					"host": ["{{baseUrl}}"],
+					"path": ["api", "retrievefornotifications"]
+				},
+				"description": "Retrieve a list of students who can receive a notification (includes @mentioned students)."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [""]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [""]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
 }
