@@ -1,7 +1,8 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import apiRoutes from './api/routes';
+import apiRoutes from './api/routes/index.js';
+import { errorHandler } from './api/middlewares/error';
 
 const app = express();
 
@@ -10,13 +11,20 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
+// API health check
+app.get('/health', (_, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 // Routes
 app.use('/api', apiRoutes);
 
-// Error handler
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error(err.stack);
-  res.status(500).json({ message: err.message || 'An unexpected error occurred' });
+// 404 handler
+app.use((_, res) => {
+  res.status(404).json({ message: 'Resource not found' });
 });
+
+// Error handler
+app.use(errorHandler);
 
 export default app;

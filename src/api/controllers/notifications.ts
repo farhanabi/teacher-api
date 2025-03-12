@@ -1,18 +1,20 @@
 import { NextFunction, Request, Response } from 'express';
-import { notificationsSchema } from '../validations/notifications';
+import { NotificationsRequest } from '../validations/notifications';
 import { getNotificationRecipients } from '../../services/notification';
+import { ApiError } from '../middlewares/error';
 
 export const retrieveForNotifications = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { teacher, notification } = notificationsSchema.parse(req.body);
-    
+    const { teacher, notification } = req.body as NotificationsRequest;
+
     const recipients = await getNotificationRecipients(teacher, notification);
     
     res.status(200).json({ recipients });
+    return;
   } catch (error) {
     if (error instanceof Error) {
-      res.status(400).json({ message: error.message });
+      return next(new ApiError(400, error.message));
     }
-    res.status(500).json({ message: 'An unexpected error occurred' });
+    return next(error);
   }
 };

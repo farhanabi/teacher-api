@@ -1,7 +1,9 @@
 import { z } from 'zod';
 
 export const suspendSchema = z.object({
-  student: z.string().email(),
+  body: z.object({
+    student: z.string().email('Invalid student email format'),
+  }),
 });
 
-export type SuspendRequest = z.infer<typeof suspendSchema>;
+export type SuspendRequest = z.infer<typeof suspendSchema>['body'];
