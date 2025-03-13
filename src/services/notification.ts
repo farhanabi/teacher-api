@@ -1,6 +1,6 @@
 import { and, eq, inArray } from "drizzle-orm";
-import { db } from "../db/index.js";
-import { registrations, students, teachers } from "../db/schema.js";
+import { db } from "../db";
+import { registrations, students, teachers } from "../db/schema";
 
 export const getNotificationRecipients = async (
 	teacherEmail: string,

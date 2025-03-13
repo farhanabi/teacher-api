@@ -1,7 +1,7 @@
-import { and, eq, inArray } from "drizzle-orm";
-import { db } from "../db/index.js";
-import { registrations, students, teachers } from "../db/schema.js";
-import type { Student, Teacher } from "../types/index.js";
+import { and, eq } from "drizzle-orm";
+import { db } from "../db";
+import { registrations, students, teachers } from "../db/schema";
+import type { Student, Teacher } from "../types";
 
 export const findOrCreateTeacher = async (email: string): Promise<Teacher> => {
 	const existingTeachers = await db

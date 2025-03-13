@@ -1,6 +1,6 @@
 import { eq, or } from "drizzle-orm";
-import { db } from "../../src/db/index.js";
-import { registrations, students, teachers } from "../../src/db/schema.js";
+import { db } from "../../src/db";
+import { registrations, students, teachers } from "../../src/db/schema";
 
 // Generate a unique suffix for test data to avoid conflicts when running tests in parallel
 const uniqueSuffix = Math.random().toString(36).substring(2, 10);

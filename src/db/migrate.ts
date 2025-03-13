@@ -1,5 +1,5 @@
 import { migrate } from "drizzle-orm/mysql2/migrator";
-import { db } from "./index.js";
+import { db } from "./index";
 
 async function main() {
 	console.log("Running migrations...");

@@ -9,10 +9,10 @@ import {
 	expect,
 	it,
 } from "vitest";
-import app from "../src/app.js";
-import { db } from "../src/db/index.js";
-import { registrations, students, teachers } from "../src/db/schema.js";
-import { logger } from "../src/utils/logger.js";
+import app from "../src/app";
+import { db } from "../src/db";
+import { registrations, students, teachers } from "../src/db/schema";
+import { logger } from "../src/utils/logger";
 
 describe("POST /api/register", () => {
 	const testResources: { teacherEmails: string[]; studentEmails: string[] } = {

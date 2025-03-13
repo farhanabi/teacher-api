@@ -1,11 +1,11 @@
 import { eq, or } from "drizzle-orm";
 import request from "supertest";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import app from "../src/app.js";
-import { db } from "../src/db/index.js";
-import { students, teachers } from "../src/db/schema.js";
+import app from "../src/app";
+import { db } from "../src/db";
+import { students, teachers } from "../src/db/schema";
 import type { Student, Teacher } from "../src/types";
-import { setupTestDb, teardownTestDb } from "./helpers/db.js";
+import { setupTestDb, teardownTestDb } from "./helpers/db";
 
 describe("POST /api/retrievefornotifications", () => {
 	let testData: {

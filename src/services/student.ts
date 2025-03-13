@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
-import { db } from "../db/index.js";
-import { students } from "../db/schema.js";
+import { db } from "../db";
+import { students } from "../db/schema";
 
 export const suspendStudent = async (email: string) => {
 	const existingStudents = await db

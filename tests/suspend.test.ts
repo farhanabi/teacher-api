@@ -1,11 +1,11 @@
 import { eq, or } from "drizzle-orm";
 import request from "supertest";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import app from "../src/app.js";
-import { db } from "../src/db/index.js";
-import { students } from "../src/db/schema.js";
-import type { Student, Teacher } from "../src/types/index.js";
-import { setupTestDb, teardownTestDb } from "./helpers/db.js";
+import app from "../src/app";
+import { db } from "../src/db";
+import { students } from "../src/db/schema";
+import type { Student, Teacher } from "../src/types";
+import { setupTestDb, teardownTestDb } from "./helpers/db";
 
 describe("POST /api/suspend", () => {
 	let testData: {
