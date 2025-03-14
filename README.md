@@ -31,8 +31,9 @@ A RESTful API for teacher-student management, built with Node.js, TypeScript, an
 │   │   └── validations/   # Request validation schemas
 │   ├── config/            # App configuration
 │   ├── db/                # Database setup and migrations
-│   │   ├── migrations/
+│   │   ├── migrations/    # Generated migration files
 │   │   ├── schema.ts      # DrizzleORM schema definitions
+│   │   ├── seed.ts        # Database seeder
 │   │   └── index.ts       # DB connection
 │   ├── services/          # Business logic
 │   ├── types/             # TypeScript type definitions
@@ -40,7 +41,46 @@ A RESTful API for teacher-student management, built with Node.js, TypeScript, an
 │   ├── app.ts             # Express app setup
 │   └── index.ts           # Entry point
 ├── tests/                 # Test files
+├── postman/               # Postman collection
+├── .env.example           # Example environment variables
+└── docker-compose.yml     # Docker configuration
 ```
+
+## Database Schema
+
+```
+┌─────────────┐       ┌──────────────────┐       ┌─────────────┐
+│   teachers  │       │  registrations   │       │   students  │
+├─────────────┤       ├──────────────────┤       ├─────────────┤
+│ id          │───────│ teacherId        │   ┌───│ id          │
+│ email       │       │ studentId        │───┘   │ email       │
+│ createdAt   │       │ createdAt        │       │ suspended   │
+│ updatedAt   │       └──────────────────┘       │ createdAt   │
+└─────────────┘                                  │ updatedAt   │
+                                                 │             │
+                                                 └─────────────┘
+```
+
+### Schema Details
+
+**teachers**
+- `id`: Integer, Primary Key, Auto Increment
+- `email`: Varchar(255), Unique, Not Null
+- `createdAt`: Timestamp, Default Now()
+- `updatedAt`: Timestamp, Default Now(), On Update Now()
+
+**students**
+- `id`: Integer, Primary Key, Auto Increment
+- `email`: Varchar(255), Unique, Not Null
+- `suspended`: Boolean, Default False
+- `createdAt`: Timestamp, Default Now()
+- `updatedAt`: Timestamp, Default Now(), On Update Now()
+
+**registrations**
+- `teacherId`: Integer, Not Null, Foreign Key → teachers.id
+- `studentId`: Integer, Not Null, Foreign Key → students.id
+- `createdAt`: Timestamp, Default Now()
+- Primary Key: (teacherId, studentId)
 
 ## Getting Started
 
@@ -48,6 +88,7 @@ A RESTful API for teacher-student management, built with Node.js, TypeScript, an
 
 - Node.js v16+
 - Docker and Docker Compose (for running MySQL)
+- pnpm
 
 ### Local Development Setup
 
@@ -69,6 +110,7 @@ pnpm install
 ```bash
 cp .env.example .env
 ```
+> Note: By default, the MySQL credentials are set to `root:password`. You can modify these in the `.env` file if needed.
 
 4. Start MySQL with Docker:
 
@@ -76,14 +118,21 @@ cp .env.example .env
 docker compose up -d
 ```
 
-5. Generate and run migrations:
+> Note: Wait for MySQL to be fully running (use `docker compose ps` to check status)
+
+5. Run database migrations to create the schema:
 
 ```bash
-pnpm db:generate
 pnpm db:migrate
 ```
 
-6. Start the development server:
+6. Seed the database with initial data:
+
+```bash
+pnpm db:seed
+```
+
+7. Start the development server:
 
 ```bash
 pnpm run dev
@@ -91,7 +140,7 @@ pnpm run dev
 
 The API will be available at http://localhost:3000.
 
-## Running Tests
+8. Run tests:
 
 ```bash
 pnpm run test
